@@ -1,0 +1,41 @@
+- @page_title = t('users.sing_in')
+#loginform
+  .logo
+    spa.db
+      img src="/images/logo-icon.svg" alt="logo"
+    h5.font-medium.m-b-20 #{t('users.sing_in')}
+
+  .row
+    .col-12
+      - if flash[:alert]
+        div class="alert alert-danger alert-dismissible" role="alert" id="divAlert"
+          button type="button" class="close" data-dismiss="alert" aria-label="Close" id="closeAlert"
+            span aria-hidden="true" x
+          strong
+            = flash[:alert]
+
+      = form_for(resource, as: resource_name, url: session_path(resource_name), html: {:class => 'form-horizontal m-t-20'}) do |f|
+        .input-group.mb-3
+          .input-group-prepend
+            span.input-group-text#basic-addon1
+              i.ti-user
+          = f.email_field :email, autofocus: true, autocomplete: t('users.email.label'), class: 'form-control form-control-lg',placeholder: t('users.email.placeholder')
+
+        .input-group.mb-3
+          .input-group-prepend
+            span.input-group-text#basic-addon2
+              i.ti-pencil
+          = f.password_field :password, autocomplete: t('users.password.label'), class: 'form-control form-control-lg', placeholder: t('users.password.placeholder')
+
+        - if devise_mapping.rememberable?
+          .form-group.row
+            .col-md-12
+              .custom-control.custom-checkbox
+                = f.check_box :remember_me, class: 'custom-control-input'
+                label.custom-control-label #{t('users.remember_me')}
+
+        .form-group.text-center
+          .col-xs-12.p-b-20
+            = f.submit t('users.sing_in'), class: 'btn btn-block btn-lg btn-info'
+          .col-xs-12.p-b-20
+            = link_to t('app.cancel'),index_url, class: 'btn btn-block btn-lg btn-danger'

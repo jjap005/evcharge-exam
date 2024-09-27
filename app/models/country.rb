@@ -1,4 +1,7 @@
 class Country < ApplicationRecord
-    validates :name, presence: true
-    validates :code, length: { is: 3 }, uniqueness: true
-  end
+  has_many :regions
+
+
+  validates :name, presence: true
+  validates :code, presence: true, uniqueness: true
+end

@@ -12,10 +12,7 @@ html dir="ltr" lang="#{I18n.locale}"
 
   body
     div id="main-wrapper"
-      div class="container-fluid"
-        .row
-          .col-12
-            == yield
+      == yield
 
       footer class="footer text-center"
         | #{t('app.design_by_developer')}

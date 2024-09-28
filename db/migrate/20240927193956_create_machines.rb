@@ -5,7 +5,7 @@ class CreateMachines < ActiveRecord::Migration[6.1]
       t.string :model
       t.string :supplier
       t.references :location, null: false, foreign_key: true
-      t.integer :status, default: 0
+      t.integer :status, default: 1
       t.datetime :last_maintenance_date
       t.timestamps
     end

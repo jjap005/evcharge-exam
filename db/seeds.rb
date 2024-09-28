@@ -5,6 +5,7 @@ Location.destroy_all
 Machine.destroy_all
 User.destroy_all
 Vehicle.destroy_all
+MachineUsage.destroy_all
 
 #################### Countries
 spain = Country.create!(name: 'España', code: 'spn')
@@ -38,7 +39,7 @@ regions.each do |region|
     # Charge Stations 1-10 for city
     rand(1..10).times do
 
-      location = Location.create!(name: "#{city.name} Location #{rand(1..100)}", address: "address #{rand(1..100)}", city_id: city.id)
+      location = Location.create!(name: "#{city.name} Location #{rand(1..100)}", address: "address #{rand(1..100)}", city_id: city.id, status: 1)
 
       #3-6 Machines for Station
       rand(3..6).times do
@@ -70,7 +71,37 @@ end
       model: ["Model S", "Leaf", "X5", "Mustang", "Bolt"].sample,
       year: rand(2000..2023),
       user: user,
-      status: rand(0..1) # 0 = activo, 1 = inactivo
+      status: rand(0..1)
     )
   end
 end
+
+
+users = User.all
+machines = Machine.all
+vehicles = Vehicle.all
+
+users.each do |user|
+  rand(1..10).times do
+    machine = machines.active.sample
+    vehicle = user.vehicles.active.sample
+
+    start_time = rand(30.days.ago..Time.now)
+    time_spend = rand(30.0..120.0).minutes
+    end_time = start_time + time_spend
+
+    usage_duration = (end_time - start_time) / 60.0
+    billed_amount = usage_duration * rand(0.1..0.5)
+
+    MachineUsage.create!(
+      machine: machine,
+      vehicle: vehicle,
+      start_time: start_time,
+      end_time: end_time,
+      billed_amount: billed_amount,
+      energy_used: time_spend.round(2) * rand(0.1..0.5)
+    ) if vehicle
+  end
+end
+
+puts "##########Machine Usages"

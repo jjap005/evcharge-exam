@@ -1,6 +1,5 @@
 class MachineUsage < ApplicationRecord
   belongs_to :machine
-  belongs_to :user
   belongs_to :vehicle
 
   validates :start_time, presence: true

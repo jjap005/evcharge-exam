@@ -61,3 +61,4 @@ gem 'devise', '~> 4.9', '>= 4.9.4'
 #Template Views
 gem 'slim'
 gem 'slim-rails'
+gem 'active_model_serializers', '~> 0.10.0'

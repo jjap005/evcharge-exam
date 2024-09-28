@@ -6,7 +6,7 @@ class CreateReservations < ActiveRecord::Migration[6.1]
       t.references :vehicle, foreign_key: true
       t.datetime :start_time, null: false
       t.datetime :end_time, null: false
-      t.integer :status, default: 0
+      t.integer :status, default: 1
       t.timestamps
     end
   end
